@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+'''
+amenities view module
+'''
 from flask import jsonify, abort, request
 from models import storage, classes
 import models
@@ -7,6 +10,9 @@ from api.v1.views import app_views
 
 @app_views.route('/amenities', methods=['GET'])
 def all_objects():
+    '''
+    function returns all amenity objects
+    '''
     my_list = []
     my_dict = storage.all('Amenity')
     for k, v in my_dict.items():
@@ -15,6 +21,9 @@ def all_objects():
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'])
 def single_object(amenity_id):
+    '''
+    function returns single object given its id
+    '''
     desired_key = 'Amenity.' + amenity_id
     my_dict = storage.all('Amenity')
     for k, v in my_dict.items():
@@ -25,6 +34,9 @@ def single_object(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def delete_object(amenity_id):
+    '''
+    function deletes an object given its id
+    '''
     to_remove = storage.get("Amenity", amenity_id)
     if to_remove is not None:
         storage.delete(to_remove)
@@ -34,6 +46,9 @@ def delete_object(amenity_id):
 
 @app_views.route('/amenities', methods=['POST'])
 def post_object():
+    '''
+    function creates a new amenity object
+    '''
     data = request.get_json()
     if data is None:
         return (jsonify({'error':'Not a JSON'}), 400)
@@ -48,6 +63,9 @@ def post_object():
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def put_object(amenity_id):
+    '''
+    function updates an object given its id
+    '''
     data = request.get_json()
     my_amenity = storage.get("Amenity", amenity_id)
     if my_amenity is None:
