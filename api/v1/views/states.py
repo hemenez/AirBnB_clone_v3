@@ -4,7 +4,7 @@ from models import storage, classes
 from api.v1.views import app_views
 
 
-@app_views.route('/states/', methods=['GET'])
+@app_views.route('/states', methods=['GET'])
 def all_states():
     return jsonify([v.to_dict() for k, v in storage.all('State').items()])
 
@@ -26,7 +26,7 @@ def delete_state(state_id):
     abort(404)
 
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states', methods=['POST'])
 def post_state():
     data = request.get_json()
     if data is None:
