@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+'''
+treats directory as package
+'''
 from flask import Blueprint
 
 
