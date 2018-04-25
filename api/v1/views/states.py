@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+'''
+state view module
+'''
 from flask import jsonify, abort, request
 from models import storage, classes
 from api.v1.views import app_views
@@ -6,10 +9,16 @@ from api.v1.views import app_views
 
 @app_views.route('/states', methods=['GET'])
 def all_states():
+    '''
+    function returns all state objects
+    '''
     return jsonify([v.to_dict() for k, v in storage.all('State').items()])
 
 @app_views.route('/states/<state_id>', methods=['GET'])
 def single_state(state_id):
+    '''
+    function returns state object given its id
+    '''
     for k, v in storage.all('State').items():
         if v.id == state_id:
             return jsonify(v.to_dict())
@@ -18,6 +27,9 @@ def single_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
+    '''
+    function deletes an object given its id
+    '''
     remove = storage.get("State", state_id)
     if remove is not None:
         storage.delete(remove)
@@ -28,6 +40,9 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'])
 def post_state():
+    '''
+    function creates a new state object
+    '''
     data = request.get_json()
     if data is None:
         return jsonify({'error':'Not a JSON'}), 400
@@ -41,6 +56,9 @@ def post_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def put_state(state_id):
+    '''
+    function updates a state object given its id
+    '''
     data = request.get_json()
     state = storage.get("State", state_id)
     if state is None:
