@@ -90,5 +90,5 @@ def put_review(review_id):
         if k != 'id' and k != 'created_at' and k != 'updated_at'\
            and k != 'user_id' and k != 'place_id':
             setattr(my_review, k, v)
-            my_review.save()
+    my_review.save()
     return jsonify(my_review.to_dict()), 200
