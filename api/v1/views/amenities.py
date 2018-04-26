@@ -19,6 +19,7 @@ def all_objects():
         my_list.append(v.to_dict())
     return jsonify(my_list)
 
+
 @app_views.route('/amenities/<amenity_id>', methods=['GET'])
 def single_object(amenity_id):
     '''
@@ -32,6 +33,7 @@ def single_object(amenity_id):
     else:
         abort(404)
 
+
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def delete_object(amenity_id):
     '''
@@ -44,6 +46,7 @@ def delete_object(amenity_id):
         return jsonify({}), 200
     abort(404)
 
+
 @app_views.route('/amenities', methods=['POST'])
 def post_object():
     '''
@@ -51,7 +54,7 @@ def post_object():
     '''
     data = request.get_json()
     if data is None:
-        return (jsonify({'error':'Not a JSON'}), 400)
+        return (jsonify({'error': 'Not a JSON'}), 400)
     elif 'name' not in data:
         return (jsonify({'error': 'Missing name'}), 400)
     else:
@@ -60,6 +63,7 @@ def post_object():
             setattr(my_new, k, v)
         my_new.save()
         return jsonify(my_new.to_dict()), 201
+
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def put_object(amenity_id):
@@ -71,7 +75,7 @@ def put_object(amenity_id):
     if my_amenity is None:
         abort(404)
     if data is None:
-        return (jsonify({'error':'Not a JSON'}), 400)
+        return (jsonify({'error': 'Not a JSON'}), 400)
     for k, v in data.items():
         if k != 'id' and k != 'created_at' and k != 'updated_at':
             setattr(my_amenity, k, v)
