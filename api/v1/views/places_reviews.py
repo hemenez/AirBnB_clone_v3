@@ -14,13 +14,15 @@ def all_reviews(place_id):
     function returns all reviews given a place's id
     '''
     reviews = []
-    for k, v in storage.all('Review').items():
+    my_dict = storage.all('Review')
+    check_place = storage.get("Place", place_id)
+    if check_place is None:
+        abort(404)
+    for k, v in my_dict.items():
         if v.place_id == place_id:
             reviews.append(v.to_dict())
-    if len(reviews) != 0:
-        return jsonify(reviews)
-    else:
-        abort(404)
+        reviews.append(v.to_dict())
+    return jsonify(reviews)
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'])
@@ -67,9 +69,8 @@ def post_review(place_id):
         return (jsonify({'error': 'Text'}), 400)
     else:
         my_new = classes["Review"]()
-        setattr(my_new, "place_id", place_id)
-        setattr(my_new, "text", data['text'])
-        setattr(my_new, "user_id", data['user_id'])
+        for k, v in data.items():
+            setattr(my_new, k, v)
         my_new.save()
         return jsonify(my_new.to_dict()), 201
 
