@@ -13,13 +13,13 @@ def all_cities(state_id):
     function returns all cities given state id
     '''
     cities = []
+    check_state = storage.get("State", state_id)
+    if check_state is None:
+        abort(404)
     for k, v in storage.all('City').items():
         if v.state_id == state_id:
             cities.append(v.to_dict())
-    if len(cities) != 0:
-        return jsonify(cities)
-    else:
-        abort(404)
+    return jsonify(cities)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
