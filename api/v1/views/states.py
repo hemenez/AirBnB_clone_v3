@@ -14,6 +14,7 @@ def all_states():
     '''
     return jsonify([v.to_dict() for k, v in storage.all('State').items()])
 
+
 @app_views.route('/states/<state_id>', methods=['GET'])
 def single_state(state_id):
     '''
@@ -24,6 +25,7 @@ def single_state(state_id):
             return jsonify(v.to_dict())
     else:
         abort(404)
+
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
@@ -45,7 +47,7 @@ def post_state():
     '''
     data = request.get_json()
     if data is None:
-        return jsonify({'error':'Not a JSON'}), 400
+        return jsonify({'error': 'Not a JSON'}), 400
     elif 'name' not in data:
         return jsonify({'error': 'Missing name'}), 400
     else:
@@ -53,6 +55,7 @@ def post_state():
         setattr(new_inst, 'name', data['name'])
         new_inst.save()
         return jsonify(new_inst.to_dict()), 201
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def put_state(state_id):
