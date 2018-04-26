@@ -57,10 +57,10 @@ def post_review(place_id):
     data = request.get_json()
     check_place = storage.get("Place", place_id)
     check_user = storage.get("User", data['user_id'])
-    if data is None:
-        return (jsonify({'error': 'Not a JSON'}), 400)
-    elif check_city is None:
+    if check_place is None:
         abort(404)
+    elif data is None:
+        return (jsonify({'error': 'Not a JSON'}), 400)
     elif 'user_id' not in data:
         return (jsonify({'error': 'Missing user_id'}), 400)
     elif check_user is None:
