@@ -21,6 +21,7 @@ def all_cities(state_id):
     else:
         abort(404)
 
+
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def single_city(city_id):
     '''
@@ -31,6 +32,7 @@ def single_city(city_id):
             return jsonify(v.to_dict())
     else:
         abort(404)
+
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
@@ -55,7 +57,7 @@ def post_city(state_id):
     if check_state is None:
         abort(404)
     if data is None:
-        return jsonify({'error':'Not a JSON'}), 400
+        return jsonify({'error': 'Not a JSON'}), 400
     elif 'name' not in data:
         return jsonify({'error': 'Missing name'}), 400
     else:
@@ -64,6 +66,7 @@ def post_city(state_id):
         setattr(new_inst, 'name', data['name'])
         new_inst.save()
         return jsonify(new_inst.to_dict()), 201
+
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def put_city(city_id):
