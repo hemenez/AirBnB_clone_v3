@@ -21,7 +21,6 @@ def all_reviews(place_id):
     for k, v in my_dict.items():
         if v.place_id == place_id:
             reviews.append(v.to_dict())
-        reviews.append(v.to_dict())
     return jsonify(reviews)
 
 
@@ -66,7 +65,7 @@ def post_review(place_id):
     elif check_user is None:
         abort(404)
     elif 'text' not in data:
-        return (jsonify({'error': 'Text'}), 400)
+        return (jsonify({'error': 'Missing text'}), 400)
     else:
         my_new = classes["Review"]()
         for k, v in data.items():
