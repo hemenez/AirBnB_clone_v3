@@ -14,13 +14,15 @@ def all_places(city_id):
     function returns all places given a city id
     '''
     places = []
-    for k, v in storage.all('Place').items():
+    my_dict = storage.all('Place')
+    check_city = storage.get("City", city_id)
+    if check_city is None:
+        abort(404)
+    for k, v in my_dict.items():
         if v.city_id == city_id:
             places.append(v.to_dict())
-    if len(places) != 0:
-        return jsonify(places)
-    else:
-        abort(404)
+        places.append(v.to_dict())
+    return jsonify(places)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'])
