@@ -55,17 +55,17 @@ def post_place(city_id):
     '''
     data = request.get_json()
     check_city = storage.get("City", city_id)
-    check_user = storage.get("User", data['user_id'])
     if data is None:
         return (jsonify({'error': 'Not a JSON'}), 400)
     elif check_city is None:
         abort(404)
     elif 'user_id' not in data:
         return (jsonify({'error': 'Missing user_id'}), 400)
-    elif check_user is None:
-        abort(404)
     elif 'name' not in data:
         return (jsonify({'error': 'Missing name'}), 400)
+    check_user = storage.get("User", data['user_id'])
+    if check_user is None:
+        abort(404)
     else:
         my_new = classes["Place"]()
         for k, v in data.items():
