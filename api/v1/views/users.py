@@ -79,7 +79,8 @@ def put_user(user_id):
     if data is None:
         return (jsonify({'error': 'Not a JSON'}), 400)
     for k, v in data.items():
-        if k != 'id' and k != 'created_at' and k != 'updated_at':
+        if k != 'id' and k != 'created_at' and k != 'updated_at'\
+           and k != 'email':
             setattr(my_user, k, v)
     my_user.save()
     return jsonify(my_user.to_dict()), 200
