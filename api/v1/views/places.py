@@ -21,7 +21,6 @@ def all_places(city_id):
     for k, v in my_dict.items():
         if v.city_id == city_id:
             places.append(v.to_dict())
-        places.append(v.to_dict())
     return jsonify(places)
 
 
@@ -33,7 +32,7 @@ def single_place(place_id):
     my_place = storage.get("Place", place_id)
     if my_place is None:
         abort(404)
-    return jsonify(storage.get("Place", place_id).to_dict())
+    return jsonify(my_place.to_dict())
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'])
@@ -69,9 +68,8 @@ def post_place(city_id):
         return (jsonify({'error': 'Missing name'}), 400)
     else:
         my_new = classes["Place"]()
-        setattr(my_new, "city_id", city_id)
-        setattr(my_new, "name", data['name'])
-        setattr(my_new, "user_id", data['user_id'])
+        for k, v in data.items():
+            setattr(my_new, k, v)
         my_new.save()
         return jsonify(my_new.to_dict()), 201
 
@@ -91,5 +89,5 @@ def put_place(place_id):
         if k != 'id' and k != 'created_at' and k != 'updated_at'\
            and k != 'user_id' and k != 'city_id':
             setattr(my_place, k, v)
-            my_place.save()
+    my_place.save()
     return jsonify(my_place.to_dict()), 200
