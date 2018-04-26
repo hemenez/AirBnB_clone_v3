@@ -27,11 +27,10 @@ def single_city(city_id):
     '''
     function returns a single city given its id
     '''
-    for k, v in storage.all('City').items():
-        if v.id == city_id:
-            return jsonify(v.to_dict())
-    else:
+    my_city = storage.get("City", city_id)
+    if my_city is None:
         abort(404)
+    return jsonify(my_city.to_dict())
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
