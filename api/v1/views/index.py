@@ -14,6 +14,7 @@ def response_code():
     '''
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats')
 def count_objects():
     '''
