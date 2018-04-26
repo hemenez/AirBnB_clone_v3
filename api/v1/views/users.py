@@ -19,6 +19,7 @@ def all_users():
         my_list.append(v.to_dict())
     return jsonify(my_list)
 
+
 @app_views.route('/users/<user_id>', methods=['GET'])
 def single_user(user_id):
     '''
@@ -32,6 +33,7 @@ def single_user(user_id):
     else:
         abort(404)
 
+
 @app_views.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
     '''
@@ -44,6 +46,7 @@ def delete_user(user_id):
         return jsonify({}), 200
     abort(404)
 
+
 @app_views.route('/users', methods=['POST'])
 def post_user():
     '''
@@ -51,7 +54,7 @@ def post_user():
     '''
     data = request.get_json()
     if data is None:
-        return (jsonify({'error':'Not a JSON'}), 400)
+        return (jsonify({'error': 'Not a JSON'}), 400)
     elif 'email' not in data:
         return (jsonify({'error': 'Missing email'}), 400)
     elif 'password' not in data:
@@ -63,6 +66,7 @@ def post_user():
         my_new.save()
         return jsonify(my_new.to_dict()), 201
 
+
 @app_views.route('/users/<user_id>', methods=['PUT'])
 def put_user(user_id):
     '''
@@ -73,7 +77,7 @@ def put_user(user_id):
     if my_user is None:
         abort(404)
     if data is None:
-        return (jsonify({'error':'Not a JSON'}), 400)
+        return (jsonify({'error': 'Not a JSON'}), 400)
     for k, v in data.items():
         if k != 'id' and k != 'created_at' and k != 'updated_at':
             setattr(my_user, k, v)
