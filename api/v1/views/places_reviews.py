@@ -22,6 +22,7 @@ def all_reviews(place_id):
     else:
         abort(404)
 
+
 @app_views.route('/reviews/<review_id>', methods=['GET'])
 def single_review(review_id):
     '''
@@ -31,6 +32,7 @@ def single_review(review_id):
     if my_review is None:
         abort(404)
     return jsonify(my_review.to_dict())
+
 
 @app_views.route('reviews/<review_id>', methods=['DELETE'])
 def delete_review(review_id):
@@ -44,6 +46,7 @@ def delete_review(review_id):
         return jsonify({}), 200
     abort(404)
 
+
 @app_views.route('/places/<place_id>/reviews', methods=['POST'])
 def post_review(place_id):
     '''
@@ -53,7 +56,7 @@ def post_review(place_id):
     check_place = storage.get("Place", place_id)
     check_user = storage.get("User", data['user_id'])
     if data is None:
-        return (jsonify({'error':'Not a JSON'}), 400)
+        return (jsonify({'error': 'Not a JSON'}), 400)
     elif check_city is None:
         abort(404)
     elif 'user_id' not in data:
@@ -70,6 +73,7 @@ def post_review(place_id):
         my_new.save()
         return jsonify(my_new.to_dict()), 201
 
+
 @app_views.route('/reviews/<review_id>', methods=['PUT'])
 def put_review(review_id):
     '''
@@ -80,10 +84,10 @@ def put_review(review_id):
     if my_review is None:
         abort(404)
     if data is None:
-        return (jsonify({'error':'Not a JSON'}), 400)
+        return (jsonify({'error': 'Not a JSON'}), 400)
     for k, v in data.items():
         if k != 'id' and k != 'created_at' and k != 'updated_at'\
-                             and k != 'user_id' and k != 'place_id':
-                             setattr(my_review, k, v)
-                             my_review.save()
+           and k != 'user_id' and k != 'place_id':
+            setattr(my_review, k, v)
+            my_review.save()
     return jsonify(my_review.to_dict()), 200
