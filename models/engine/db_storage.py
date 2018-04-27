@@ -97,28 +97,3 @@ class DBStorage():
         close method on the class Session
         '''
         self.__session.close()
-
-    def get(self, cls, id):
-        '''
-        Method retireves one object based on the class name and its ID,
-        if none are found, returns None
-        '''
-        desired_key = cls + '.' + id
-        obj_dict = self.all()
-        for key, val in obj_dict.items():
-            if key == desired_key:
-                return val
-        return None
-
-    def count(self, cls=None):
-        '''
-        Method counts the number of objects in storage. Returns the
-        number of objects in storage matching the given class name.
-        If no name is passed, returns the count of all objects in storage.
-        '''
-        obj_dict = {}
-        if cls is not None:
-            obj_dict = self.all(cls)
-        else:
-            obj_dict = self.all()
-        return len(obj_dict)
