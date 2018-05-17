@@ -1,7 +1,12 @@
+<img src="https://github.com/jarehec/AirBnB_clone_v3/blob/master/dev/HBTN-hbnb-Final.png" width="160" height=auto />
+
+# AirBnB Clone: Version #3
+
 # Synopsis
 
 The Airbnb clone project for which we are creating a copy of the [Airbnb](https://www.airbnb.com/).
 Only some features will be implemented and will be listed below once completed.
+
 
 
 ## Features
